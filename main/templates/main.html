@@ -1,3 +1,17 @@
-<h1>Barito International</h1>
+<head>
+    <title>Barito International</title>
+</head>
 
-<p>{{ tagline }}</p>
+<body>
+    <h1>{{ tagline }}</h1>
+<ul>
+    {% for product in products %}
+        <li>
+            <h3>{{ product.name }}</h3>
+            <p>Price: ${{ product.price }}</p>
+            <p>Description: {{ product.description }}</p>
+            <p>Quantity: {{ product.quantity }}</p>
+        </li>
+    {% endfor %}
+</ul>
+</body>
