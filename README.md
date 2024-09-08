@@ -1,7 +1,9 @@
 # BaritoInternational
 
 ## Pertanyaan
-1.  a.  Pertama pastikan python telah terinstall dengan sempurna, setelah python terinstall dengan sempurna,
+1.  
+    **JAWAB**
+    a.  Pertama pastikan python telah terinstall dengan sempurna, setelah python terinstall dengan sempurna,
         pastikan telah membuat virtual environment (venv). Setelah berhasil membuat venv, pastikan anda telah
         mengaktifkan venv yang baru saja dibuat.
     b.  Buat sebuah text file (ex : requirements.txt) yang berisi paket atau modul yang akan di install ke dalam
@@ -116,3 +118,4 @@
         `<username-sso>-<nama proyek>.pbp.cs.ui.ac.id`, selanjutnya lakukan add dan commit lalu push ke pws
         dengan sintaks `git push pws main:master`
     m.  Bahagia `:)`
+    
