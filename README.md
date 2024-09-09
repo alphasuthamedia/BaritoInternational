@@ -13,7 +13,7 @@
             psycopg2-binary
             requests
             urllib3
-        ```
+        ``` 
         Setelah demikian, lakukan "pip install requirements.txt"
     c.  Selanjutnya, buat proyek Django dengan perintah "`django-admin startproject [yourprojectname] .`"
     d.  Tambahkan permission host lokal yang dibolehkan pada file settings.py
