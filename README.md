@@ -110,3 +110,13 @@ environment python yang telah dibuat. requirements.txt ini berisi:
     `<username-sso>-<nama proyek>.pbp.cs.ui.ac.id`, selanjutnya lakukan add dan commit lalu push ke pws
     dengan sintaks `git push pws main:master`
 13. Bahagia `:)`
+
+## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+![Django workflow chart](https://github.com/alphasuthamedia/BaritoInternational/issues/1#issue-2516085349)
+Alur DBMS Django
+1.  Client mengirimkan request ke Django.
+2.  urls.py mencocokkan URL dengan view.
+3.  views.py mengeksekusi logika aplikasi.
+4.  models.py berinteraksi dengan database jika diperlukan.
+5.  views.py merender data ke dalam template HTML.
+6.  HTTP response dikirimkan kembali ke Client sebagai tampilan web.
