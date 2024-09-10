@@ -112,7 +112,8 @@ environment python yang telah dibuat. requirements.txt ini berisi:
 13. Bahagia `:)`
 
 ## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
-![Django workflow chart](https://github.com/alphasuthamedia/BaritoInternational/issues/1#issue-2516085349)
+![Django_Routing](https://github.com/user-attachments/assets/47cd7ebc-a5a7-4c3c-a065-5d34cd7ee088)
+
 Alur DBMS Django
 1.  Client mengirimkan request ke Django.
 2.  urls.py mencocokkan URL dengan view.
