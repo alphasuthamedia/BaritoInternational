@@ -51,7 +51,7 @@ environment python yang telah dibuat. requirements.txt ini berisi:
      ini berupa file html yang akan kita hubungkan dengan view, sebagai contoh saya menggunakan `main.html`
 9.  Kemudian integrawsikan komponen MVT dengan membuat fungsi `show_main` di `views.py` yang akan mengembalikan
     _response_ berupa _template_ HTML yang menampilkan nama aplikasi dan nama serta kelas saya.
-   ```python
+    ```python
     from django.shortcuts import render
        def show_main(request):
         Product = [
@@ -67,7 +67,7 @@ environment python yang telah dibuat. requirements.txt ini berisi:
            'products' : Product
         }
         return render(request, "main.html", context)
-     ```
+    ```
     `request` berarti sebuah objek permintaan HTTP yang dikirim oleh pengguna.
     `main.html` adalah berkas template yang akan digunakan untuk me-render tampilan
     `context` adalah dictionary yang berisi data yang akan diteruskan ke tampilan untuk digunakan dalam penampilan dinamis.
