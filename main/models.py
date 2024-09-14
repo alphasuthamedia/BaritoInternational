@@ -13,3 +13,4 @@ class Product(models.Model):
     # Representasi dari object
     def __str__(self):
         return (self.name + ' - ' + str(self.price) + ' - ' + self.description)
+        
