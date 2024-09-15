@@ -138,3 +138,20 @@ Selain itu, Django juga memiliki ORM (Object-Relational Mapping) bawaan yang mem
 
 ## Mengapa model pada Django disebut sebagai ORM?
 Model Django disebut ORM (Object-Relational Mapping) karena berfungsi sebagai jembatan antara objek Python dan tabel dalam database relasional. Dengan ORM, pengembang bisa mengelola data melalui objek tanpa harus menulis query SQL secara manual. ORM memudahkan operasi CRUD (Create, Read, Update, Delete), menyediakan portabilitas antar-database, serta meningkatkan keamanan dengan melindungi aplikasi dari SQL injection.
+
+
+---
+## Tugas 3 - PBP 24/25
+
+##  Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memastikan bahwa data dapat diakses, diproses, dan didistribusikan secara efisien dan andal di antara berbagai komponen sistem dan end user. Hal ini berpengaruh terhadap performa secara keseluruhan, bila mana data tidak dikirimkan dengan tepat waktu maka akan terjadi kegagalan dalam pengiriman atau waiting sehingga menyebabkan keterlambatan bahkan kehilagan data atau paket (paket loss). Selain itu, data delivery juga memungkinkan integrasi antar berbagai layanan atau modul dalam platform, serta mendukung pengalaman pengguna yang lancar dan efisien.
+
+## Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+Menurut saya, saya lebih menyukai XML dariapada JSON, mengapa? mungkin dikarenaan saya lebih terbiasa untuk membaca file dalam format XML daripada JSON. JSON sendiri lebih populer dibandingkan dengna XML dikarenakan JSON lebihi simpel (ringkas) dan fleksibel. Selain itu, JSON sendiri juga mendapat dukungan langsung dari JavaScript menjadikannya lebih mudah diimplementasikan dalam aplikasi berbasis WEB. Terakhir, mungkin sebagian orang merasa JSON lebih mudah dipahami karena sintaks yang lebih sederhana.
+
+## Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+Fungsi is_valid() yang telah kita buat bertujuan untuk memvalidasi input user sesuai dengan tipe input yang kita inginkan. Jika data valid, maka method ini akan mengembalikan return True dan data dapat diproses lebih lanjut, seperti disimpan di dalam database atau di operasikan terlebih dahulu seperti operasi aritmatika dsb. baru dimasukkan kedalam database. Jika method ini mengembalika return False maka input user tidaklah valid sesuai apa yang kita inginkan (yang kita definisika input tipe datanya di dalam dbms). Tanpa menggunkana method ini kita tidak dapat memastikan apakah input yang dilakukan oleh user sudah sesuai dengan yang kita ingikan (valid) atau belum, hal ini dapat mengancam integritas data dan keamanan aplikasi itu sendiri.
+
+## Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+csrf_token berguna untuk melindungi aplikasi dari serangan Cross-Site Request Forgery. Serangan ini terjadi ketika seorang attacker mengirimkan malicious request ke server. Jika kita tidak menyertakan csrf_token dalam form Django, penyerang dapat membuat skrip atau tautan yang secara otomatis mengirimkan permintaan ke server menggunakan kredensial pengguna yang sedang aktif. Tanpa token ini, server tidak dapat memverifikasi apakah permintaan yang diterima berasal dari sumber yang sah, sehingga memungkinkan penyerang untuk melakukan tindakan yang tidak diinginkan atas nama pengguna, seperti mengubah data atau melakukan transaksi tanpa izin. CSRF token berfungsi sebagai kunci unik yang dikirim bersama setiap permintaan formulir, memungkinkan server untuk memverifikasi bahwa permintaan tersebut berasal dari sumber yang sah dan bukan dari pihak ketiga yang berniat jahat. Dengan menggunakan csrf_token, aplikasi dapat mencegah tindakan yang tidak diinginkan atau berbahaya, seperti perubahan data atau transaksi tanpa izin, sehingga meningkatkan keamanan dan integritas aplikasi web.
+
