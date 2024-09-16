@@ -155,3 +155,90 @@ Fungsi is_valid() yang telah kita buat bertujuan untuk memvalidasi input user se
 ## Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
 csrf_token berguna untuk melindungi aplikasi dari serangan Cross-Site Request Forgery. Serangan ini terjadi ketika seorang attacker mengirimkan malicious request ke server. Jika kita tidak menyertakan csrf_token dalam form Django, penyerang dapat membuat skrip atau tautan yang secara otomatis mengirimkan permintaan ke server menggunakan kredensial pengguna yang sedang aktif. Tanpa token ini, server tidak dapat memverifikasi apakah permintaan yang diterima berasal dari sumber yang sah, sehingga memungkinkan penyerang untuk melakukan tindakan yang tidak diinginkan atas nama pengguna, seperti mengubah data atau melakukan transaksi tanpa izin. CSRF token berfungsi sebagai kunci unik yang dikirim bersama setiap permintaan formulir, memungkinkan server untuk memverifikasi bahwa permintaan tersebut berasal dari sumber yang sah dan bukan dari pihak ketiga yang berniat jahat. Dengan menggunakan csrf_token, aplikasi dapat mencegah tindakan yang tidak diinginkan atau berbahaya, seperti perubahan data atau transaksi tanpa izin, sehingga meningkatkan keamanan dan integritas aplikasi web.
 
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Setelah berhasil mengimplementasikan Skeleton sebagai Kerangka Views, maka proyek kita kali ini sudah dinamik. Sebelum membuat form input data dan memasukkannya ke dalam model, ada baiknya kita ubah primary key yang tadinya incremental integer menjadi UUID, hal ini akan melindungi kita dari vulnerability IDOR. Sekarang tinggal kit abuat form nya yaitu forms.py di dalam direktori main yang nantinya berfungsi menjadi struktur from untuk menerima input dari user.
+```py
+    from django.forms import ModelForm
+    from main.models import Product
+
+    class ProductEntryForm(ModelForm):
+        class Meta:
+            model = Product
+            fields = ["name", "price", "description", "quantity"]
+```
+Setelah demikian, lakukan import redirect from django.shortcuts dan jangan lupa untuk import class ProductEntryForm yang telah kita buat di dalam forms.py tadi. lakukan ini di dalam views.py.
+```py
+    from django.shortcuts import render, redirect
+    from main.forms import ProductEntryForm
+```
+Setelah ini, tambahkan fungsi dengan parameter request untuk mengirim form dan menambahkan Product jika dan hanya jika form yang diisi telah valid melalui request.POST buat juga fungsi yang mengecek apakah yang diinput oleh user merupakan input yang valid yang sesuai dengn apa yang kita inginkan. hal ini masih berada di views.py
+```py
+    def create_product_entry(request):
+        form = ProductEntryForm(request.POST or None)
+
+        if form.is_valid() and request.method == "POST":
+            form.save()
+            return redirect('main:show_main')
+
+        context = {'form': form}
+        return render(request, "create_product_entry.html", context)
+```
+
+Kemudian pada fungsi show_main() di dalam views.py rubahlah variabel targe product menjadi product = Product.objects.all(), sebelumnya kita menghardcode product productnya, sekarang kita tinggal mengambilnya dari databse.
+```py
+    def show_main(request):
+        product = Product.objects.all()
+
+        context = {
+            'tagline' : 'Everything You Need, All in One Place.',
+            'product_entries' : product
+        }
+
+        return render(request, "main.html", context)
+```
+sekarang kita import fungsi create_product_entry dari dalam main.views ke dalam urls.py hal ini kita lakukan agar saya dapat menambahkannya kedalam urlpatterns dan buatlah path routingnya
+```py
+    from main.views import show_main, create_product_entry,
+
+    path('create_product_entry', create_product_entry, name='create_product_entry'),
+```
+setelah demikian, kita tinggal buat create_product_entry.html di dalam main/templates, ini sebagai template form yang akan mengirim request ke view create_product_entry(request). sampai sini, kita sudah berhasil untuk membuat form meminta data data dari produk, mulai dari template, variable yang dimiliki oleh produk, hingga memasukkannnya kedalam databse. perlu di ingat, jika database tidak kosong sebelum kita mengganti format id menjadi UUID, kita harus menghapusnya terlebih dahulu (file db.sqlite3) mungkin ada cara untuk mengkonversinya, namun yang jelas hal tersebut tidak atau belum dicover untuk saat ini.
+
+Sekarang kita tinggal tambahkan 4 fungsi di dalam views.py
+```py
+    def show_xml(request):
+        data = Product.objects.all()
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+    def show_json(request):
+        data = Product.objects.all()
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+    def show_xml_by_id(request, id):
+        data = Product.objects.filter(pk=id)
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+    def show_json_by_id(request, id):
+        data = Product.objects.filter(pk=id)
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+fungsi fungsi tersebut menserealisasi objek objek menjadi xml atau json sekaligus 2 fungsi paling bawah selain menampilkan objek objek yang telah terserealisasi, juga mengambilkan objek objek berdasarkan id.
+terakhir, kita hanya perlu untuk mengimpur fungsi fungsi tersebut dan menambahkan routing di dalam urls.py yang ada di dalam main agar kita bisa mengakses fungsi fungsi tersebut berdasarkan routing yang kita inginkan
+```py
+    from main.views import show_main, create_product_entry, show_xml, show_json, show_json_by_id,show_xml_by_id
+
+    path('xml/', show_xml, name='show_xml'),
+        path('json/', show_json, name='show_json'),
+        path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+        path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+```
+
+## Mengakses keempat URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+1. show_xml()
+![show_XML](https://github.com/user-attachments/assets/954224cb-10d4-4092-a7ca-3f28f1154f01)
+2. show_json()
+![show_JSON](https://github.com/user-attachments/assets/69996a7c-7efa-4214-bcab-fffed2d08929)
+3. show_xml_by_id()
+![show_XML_by_id](https://github.com/user-attachments/assets/1e095555-c155-4181-bb53-7f89b79619ec)
+4. show_json_by_id()
+![show_JSON_by_id](https://github.com/user-attachments/assets/4cfde129-4661-42e4-88f7-4c35e80faab8)

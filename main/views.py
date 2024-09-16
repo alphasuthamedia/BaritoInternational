@@ -16,8 +16,6 @@ def create_product_entry(request):
 
 # Create your views here.
 def show_main(request):
-    # sementara semua produk diletakkan disini
-    # karena belum belajar database
     product = Product.objects.all()
 
     context = {
