@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-p-hm^9p*ggtgjdh7%@mo+g=_cn-apn%y2@+h-gfe2+zw9bpcg7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
  
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "alpha-sutha-baritointernational.pbp.cs.ui.ac.id","http://http://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/", "https://http://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "alpha-sutha-baritointernational.pbp.cs.ui.ac.id","http://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/", "https://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/"]
 
 
 # Application definition
@@ -122,3 +122,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/", "https://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/"]
