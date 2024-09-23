@@ -5,7 +5,6 @@ Everything You Need, All in One Place.
 ### Deployment
 [Barito International, visit here](http://alpha-sutha-baritointernational.pbp.cs.ui.ac.id/)
 
-
 ---
 ## Tugas 2 - PBP 24/25
 
