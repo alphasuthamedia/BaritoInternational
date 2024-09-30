@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from main.models import Product
 from main.forms import ProductEntryForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
+tagline = "Everything You Need, All in One Place."
 
 def create_product_entry(request):
     form = ProductEntryForm(request.POST or None)
@@ -20,7 +22,8 @@ def create_product_entry(request):
         product_entry.save()
         return redirect('main:show_main')
 
-    context = {'form': form}
+    context = {'form': form,
+               'tagline': tagline}
     return render(request, "create_product_entry.html", context)
 
 # Create your views here.
@@ -30,7 +33,7 @@ def show_main(request):
 
     context = {
         'name' : request.user.username,
-        'tagline' : 'Everything You Need, All in One Place.',
+        'tagline' : tagline,
         'product_entries' : product,
         'last_login' : request.COOKIES['last_login'],
     }
@@ -62,7 +65,8 @@ def register(request):
             form.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
-    context = {'form':form}
+    context = {'form':form,
+               'tagline': tagline}
     return render(request, 'register.html', context)
 
 def login_user(request):
@@ -78,7 +82,10 @@ def login_user(request):
 
     else:
         form = AuthenticationForm(request)
-    context = {'form': form}
+
+    context = {'form': form,
+               'tagline': tagline}
+    
     return render(request, 'login.html', context)
 
 def logout_user(request):
@@ -86,3 +93,26 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return redirect('main:login')
+
+def delete_product(request, id):
+    # Get mood berdasarkan id
+    product = Product.objects.get(pk = id)
+    # Hapus mood
+    product.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+def edit_product(request, id):
+    # Get mood entry berdasarkan id
+    product = Product.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ProductEntryForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
