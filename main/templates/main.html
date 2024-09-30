@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <div class="bg-gradient-to-b from-gray-800 to-black min-h-screen font-sans text-gray-200">
-    <!-- Header -->
-    <div class="py-8">
-      <h1 class="text-4xl font-extrabold text-center font-mono text-indigo-400 tracking-wide">Barito International</h1>
-      <h2 class="text-2xl font-semibold text-center font-mono text-indigo-300 mt-2">{{ tagline }}</h2>
-    </div>
+  <div class="bg-gradient-to-b from-black via-[#121212] to-[#292929] min-h-screen font-sans text-gray-200">
 
     <!-- Navbar -->
-    <div class="mb-6">
+    <div class="p-6">
       {% include 'navbar.html' %}
     </div>
 
+    <!-- Header -->
+    <div class="py-8">
+      <h1 class="text-4xl font-extrabold text-center font-mono text-white tracking-wide">Barito International</h1>
+      <h2 class="text-2xl font-semibold text-center font-mono text-white mt-2">{{ tagline }}</h2>
+    </div>
+
     <!-- Add New Product Button -->
-    <div class="flex justify-end px-6">
+    <div class="flex justify-end px-6 mt-8">
       <a href="{% url 'main:create_product_entry' %}" style="outline: none !important; text-decoration: none;">
         <button class="bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
           Add New Product Entry
@@ -25,15 +26,13 @@
     <!-- Product Entries or Empty State -->
     {% if not product_entries %}
     <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
-      <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4 animate-bounce"/>
+      <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-72 h-72 animate-bounce "/>
       <p class="text-xl text-gray-400">Belum ada data produk pada Barito International.</p>
     </div>
     {% else %}
     <div class="flex flex-wrap mt-8 justify-center px-6">
       {% for product_entry in product_entries %}
-        <div class="rounded-lg shadow-md ">
-          {% include 'product_card.html' %}
-        </div>
+        {% include 'product_card.html' %}
       {% endfor %}
     </div>
     {% endif %}

@@ -11,7 +11,7 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-tagline = "Everything You Need, All in One Place."
+tagline = "Everything You Need, All in One Place"
 
 def create_product_entry(request):
     form = ProductEntryForm(request.POST or None)
@@ -23,7 +23,10 @@ def create_product_entry(request):
         return redirect('main:show_main')
 
     context = {'form': form,
-               'tagline': tagline}
+               'tagline': tagline,
+               'last_login' : request.COOKIES['last_login'],
+               }
+    
     return render(request, "create_product_entry.html", context)
 
 # Create your views here.
@@ -114,5 +117,7 @@ def edit_product(request, id):
         form.save()
         return HttpResponseRedirect(reverse('main:show_main'))
 
-    context = {'form': form}
+    context = {'form': form,
+               'product': product,
+               'last_login': request.COOKIES['last_login'],}
     return render(request, "edit_product.html", context)

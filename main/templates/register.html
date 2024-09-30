@@ -7,7 +7,7 @@
 {% block content %}
 
 <div>
-<div class="bg-slate-300 flex flex-col min-h-screen">
+<div class="bg-gradient-to-b from-black via-[#121212] to-[#292929] flex flex-col min-h-screen">
   <div class="flex justify-center mt-28 items-center">
     <div class="bg-gray-200 shadow-lg rounded-lg p-8 max-w-sm w-full">
       <h1 class="text-2xl font-bold text-gray-800 mb-2 font-sans">Register</h1>
@@ -35,22 +35,21 @@
     
         <div class="relative mt-24">
             <input type="submit" value="Register" name="submit"
-            class="w-full bg-slate-600 text-white p-3 rounded-lg font-semibold hover:bg-slate-800 focus:ring-4 focus:ring-blue-300 font-sans focus:outline-none">
+            class="w-full bg-[#262626] text-white p-3 rounded-lg font-sans hover:bg-[#1b1b1b]">
         </div>
       </form>    
     
       <!-- Back Button -->
       <div class="relative mt-3">
         <a href="{% url 'main:login' %}" 
-          class="w-full bg-slate-600 text-white p-3 rounded-lg font-semibold hover:bg-slate-800 focus:ring-4 focus:ring-blue-300 font-sans focus:outline-none text-center block">
+          class="w-full bg-[#262626] text-white p-3 rounded-lg font-sans hover:bg-[#1b1b1b] text-center block">
             Back
         </a>
       </div>
     </div>
 
     <div class="bg-gray-200 shadow-lg rounded-lg p-8 max-w-sm w-full">
-      <blockquote class="flex justify-center text-2xl font-mono italic">{{ tagline }}</blockquote>
-      <div class="font-sans mt-4 whitespace-pre-line">
+      <div class="font-sans whitespace-pre-line">
         Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
 
         Password:	

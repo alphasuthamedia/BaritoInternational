@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="min-h-screen bg-slate-300">
-  <h1 class="flex justify-center text-4xl font-sans font-semibold text-stone-950">Create Product Entry</h1>
+<div class="bg-gradient-to-b from-black via-[#121212] to-[#292929] min-h-screen">
+
+  <!-- Navbar -->
+  <div class="p-6">
+    {% include 'navbar.html' %}
+  </div>
+
+  <h1 class="flex justify-center text-4xl font-sans mb-6 mt-12 text-white">Create Product Entry</h1>
 
   <div class=" flex justify-center mt-4 items-center">
-    <div class="bg-gray-200 shadow-lg rounded-lg p-8 max-w-4xl w-full">
+    <div class="bg-gray-300 shadow-lg rounded-lg p-8 max-w-4xl w-full">
 
       <!-- Form Section -->
       <form method="POST" class="grid grid-cols-2 gap-6 w-full">

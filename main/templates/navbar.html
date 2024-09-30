@@ -5,16 +5,21 @@
         <div class="flex items-center">
           {% if user.is_authenticated %}
             <div class="flex flex-col">
-                <span class="text-gray-300 text-3xl font-mono">Welcome, {{ user.username }}</span>
+                <span class="text-gray-300 text-2xl font-mono">Welcome, {{ user.username }}</span>
                 <span class="text-gray-300 text-sm font-mono">Sesi terakhir login: {{ last_login }}</span>
             </div>
           {% endif %}
         </div>
-  
+        
         <!-- Login/Logout buttons on the right -->
-        <div class="hidden md:flex items-center">
+        <div class="hidden md:flex items-center group">
+            <a href="/" class="text-center font-sans bg-violet-700 hover:bg-violet-800 text-white font-bold py-2 
+              px-9 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out mr-4">
+              Home
+            </a>
           {% if user.is_authenticated %}
-            <a href="{% url 'main:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded font-sans transition duration-300">
+            <a href="{% url 'main:logout' %}" class="text-center font-sans bg-red-500 hover:bg-red-600 text-white font-bold py-2 
+            px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
               Sign Out
             </a>
           {% else %}
@@ -25,6 +30,7 @@
               Register
             </a>
           {% endif %}
+          
         </div>
   
         <!-- Mobile menu button on the right -->
@@ -40,11 +46,17 @@
   
     <!-- Mobile menu -->
     <div class="mobile-menu hidden md:hidden px-4 w-full md:max-w-full">
-      <div class="pt-2 pb-3 space-y-1 mx-auto">
+      <div class="flex flex-col pt-2 pb-3 space-y-1 mx-auto">
+        <div class="text-center font-sans bg-violet-700 hover:via-violet-800 text-white font-bold py-2 px-6
+           rounded shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            <a href="/" class="text-center text-white font-bold py-2 px-6 rounded-lg font-sans">
+              Home
+            </a>
+          </div>
         {% if user.is_authenticated %}
-          <span class="block text-gray-300 px-3 py-2">Welcome, {{ user.username }}</span>
-          <a href="{% url 'main:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-            Logout
+          <a href="{% url 'main:logout' %}" class="text-center font-sans bg-red-500 hover:bg-red-600 text-white font-bold py-2 
+          px-6 rounded shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            Sign Out
           </a>
         {% else %}
           <a href="{% url 'main:login' %}" class="block text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
