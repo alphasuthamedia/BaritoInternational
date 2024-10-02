@@ -395,3 +395,361 @@ def show_main():
 5. Hubungkan model dengan user -- telah dijelaskan diatas
 6. jangan lupa untuk lakukan migrasi model dan aplikasikan migrasi yang telah kita buat sebelumnya
 5. Buat akun pengguna dengan cara melakukan registrasi pada laman yang telah tersedia yaitu localhost:8000 lalu anda akan pasti diarahkan ke login page, namun anda dapat mengklik button register dan silahkan registrasi (2 user), didalamnya anda dapat langsung membuat keterangan mengenai produk, hal ini akan otomatis tersimpan berdasarkan user.
+
+---
+## Tugas 4 - PBP 24/25
+
+## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+prioritas css selector sebagai berikut:
+1. origin & importance
+2. selector spesificity 
+3. order of appearance 
+4. Initial & Inherited Properties (default values)
+
+# origin
+Author: CSS is provided by front-end developers.
+User: The browser user can customize styles, such as font and color, for their own browser.
+User-Agent: Browsers apply default styles, which can vary across different browsers.
+# importance (!important
+prioritas penerapan CSS tersebut bergantung pada spesifisitas. Spesifisitas adalah cara browser memilih gaya mana yang akan diterapkan ketika terdapat aturan yang bertentangan. Setiap selector memiliki tingkat spesifisitas yang berbeda, dengan urutan prioritas sebagai berikut:
+
+!important
+Deklarasi !important memiliki prioritas tertinggi. Ketika ditambahkan, aturan tersebut akan mengesampingkan aturan lain, bahkan jika spesifisitasnya lebih rendah.
+
+Inline styles
+Gaya yang ditulis langsung dalam atribut style elemen HTML memiliki prioritas tinggi, kecuali bila dibandingkan dengan !important.
+
+ID selector (#id)
+Selector berbasis ID memiliki spesifisitas lebih rendah dari inline styles, tetapi lebih tinggi dibandingkan class selector.
+
+Class selector (.class), Attribute selector ([attr]), dan Pseudo-class (
+)
+Selector ini memiliki tingkat spesifisitas yang sama.
+
+Element selector (tag) dan Pseudo-element (::before, ::after)
+Kedua selector ini juga memiliki nilai spesifisitas yang sama, tetapi di bawah class selector.
+
+Universal selector (*) dan Combinators (+, >, ~, " ")
+Selector ini memiliki prioritas terendah.
+
+Selain itu, ada dua aturan tambahan:
+
+Cascading: Jika ada dua aturan dengan spesifisitas yang sama, aturan yang ditulis paling akhir akan diprioritaskan.
+Inheritance: Beberapa properti CSS diwariskan dari elemen induk ke anaknya, tetapi aturan yang langsung diterapkan pada elemen akan lebih diutamakan.
+Spesifisitas dapat dihitung sebagai empat angka (a-b-c-d), di mana:
+
+a = jumlah inline styles
+b = jumlah ID selectors
+c = jumlah class, attribute, dan pseudo-class selectors
+d = jumlah element dan pseudo-element selectors)
+
+Spesifisitasnya adalah 0-1-2-1:
+
+0 (inline style)
+1 (ID selector: #content)
+2 (class selectors: .data dan .highlight)
+1 (element selector: td)
+
+## Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+Desain responsif telah menjadi salah satu konsep kunci dalam pengembangan aplikasi web masa kini, terutama karena pola perilaku pengguna yang semakin beragam. Di era digital saat ini, orang mengakses konten web menggunakan berbagai macam perangkat dengan ukuran layar yang bervariasi, mulai dari perangkat kecil seperti smartphone, hingga perangkat berukuran menengah seperti tablet, dan perangkat berlayar besar seperti laptop serta desktop. Setiap perangkat memiliki karakteristik tampilan yang berbeda, baik dari segi resolusi, orientasi layar, maupun interaksi pengguna.
+
+Desain responsif bertujuan untuk memberikan pengalaman terbaik bagi pengguna, terlepas dari perangkat apa yang mereka gunakan. Hal ini dicapai dengan menerapkan teknik-teknik seperti grid fleksibel, media query, serta gambar dan elemen yang dapat beradaptasi dengan ukuran layar. Dengan desain responsif, konten dan tata letak website dapat berubah secara dinamis agar sesuai dengan ukuran layar, memastikan bahwa pengguna dapat mengakses dan menjelajahi situs web dengan mudah dan nyaman tanpa harus memperbesar atau menggulir secara berlebihan.
+
+Selain memberikan pengalaman yang konsisten dan optimal bagi pengguna, desain responsif juga lebih efisien dari segi pengelolaan situs web. Daripada membuat versi terpisah untuk desktop dan mobile, yang memerlukan pemeliharaan dan pengembangan ganda, satu situs responsif memungkinkan pengembang untuk memelihara hanya satu basis kode. Hal ini tidak hanya menghemat waktu dan sumber daya, tetapi juga memastikan bahwa semua pengguna, tanpa memandang perangkat yang mereka gunakan, selalu mendapatkan versi situs yang terbaru dan teroptimalisasi. Ini membuat desain responsif menjadi solusi yang lebih ekonomis dan efektif dalam jangka panjang bagi pengembang dan pemilik situs.
+
+# Aplikasi yang Sudah Menggunakan Desain Responsif:
+Facebook
+Facebook menggunakan desain responsif yang memastikan tampilannya optimal di berbagai perangkat, dari smartphone hingga desktop, sehingga pengguna mendapatkan pengalaman yang konsisten.
+
+Twitter
+Twitter menerapkan desain responsif dengan baik, memungkinkan pengguna untuk mengakses dan menavigasi konten dengan nyaman di semua ukuran layar.
+
+Amazon
+Amazon memiliki desain responsif yang memungkinkan pelanggan untuk berbelanja dengan mudah dari perangkat apapun, baik itu smartphone, tablet, atau desktop.
+
+YouTube
+YouTube memastikan bahwa antarmuka pengguna dan kontennya berfungsi dengan baik di semua perangkat, sehingga pengguna dapat menonton video dan berinteraksi dengan situs tanpa masalah.
+
+Google
+Situs pencarian dan produk-produk Google seperti Gmail, Google Drive, dan Google Docs memiliki desain responsif yang dioptimalkan untuk berbagai perangkat, memberikan pengalaman yang konsisten dan nyaman.
+
+# Aplikasi yang Belum Menggunakan Desain Responsif:
+Craigslist
+Craigslist, situs iklan baris, masih memiliki desain yang sangat dasar dan belum sepenuhnya responsif. Pengalaman pengguna di perangkat mobile sering kali tidak optimal, dengan teks dan gambar yang sulit diakses.
+
+Reddit (versi lama)
+Versi lama Reddit tidak responsif dan sulit digunakan di perangkat mobile. Meskipun Reddit kini telah diperbarui dengan desain responsif, pengguna versi lama mungkin masih merasakan pengalaman yang tidak optimal di layar yang lebih kecil.
+
+Aplikasi Internal Perusahaan Lama
+Banyak aplikasi web internal dari perusahaan-perusahaan besar yang belum diperbarui ke desain responsif. Aplikasi ini sering kali didesain hanya untuk desktop dan memberikan pengalaman yang buruk ketika diakses dari perangkat mobile.
+
+Beberapa Situs Pemerintah Tua
+Beberapa situs web pemerintah yang lebih tua masih menggunakan desain yang tidak responsif. Mereka biasanya hanya dioptimalkan untuk tampilan desktop, dan pengguna di perangkat mobile mungkin kesulitan mengakses konten atau navigasi.
+
+Small Niche Websites
+Banyak situs web kecil atau blog niche yang belum diperbarui dengan desain responsif, terutama jika mereka dibangun sebelum responsif menjadi standar. Ini menyebabkan tampilan yang kurang baik pada perangkat mobile.
+
+## Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+- Margin adalah ruang di luar batas elemen yang memisahkan elemen tersebut dari elemen lain di sekitarnya. Margin bersifat transparan.
+- Border adalah garis yang mengelilingi padding dan konten elemen. Border dapat terlihat, namun juga bisa dibuat tidak terlihat (invisible).
+- Padding adalah ruang antara konten elemen dan bordernya. Padding juga bersifat transparan.
+
+```css
+    .element {  /* Selector */
+    margin: 10px;                 /* Semua sisi */
+    margin: 10px 20px;            /* Atas-bawah | Kiri-kanan */
+    margin: 10px 20px 15px 25px;  /* Atas | Kanan | Bawah | Kiri */
+    margin-top: 15px;             /* Khusus untuk sisi tertentu */
+}
+
+```
+
+```css
+    .element {  /* Selector */
+    border: 1px solid black;      /* Lebar | Gaya | Warna */
+    border-width: 2px;            /* Khusus lebar */
+    border-style: dashed;         /* Khusus gaya */
+    border-color: red;            /* Khusus warna */
+    border-radius: 5px;           /* Untuk sudut melengkung */
+}
+
+```
+
+```css
+.element {  /* Selector */
+    padding: 10px;                 /* Semua sisi */
+    padding: 10px 20px;            /* Atas-bawah | Kiri-kanan */
+    padding: 10px 20px 15px 25px;  /* Atas | Kanan | Bawah | Kiri */
+    padding-left: 15px;            /* Khusus untuk sisi tertentu */
+}
+
+```
+Perlu diperhatikan bahwa margin, border, dan padding semuanya mempengaruhi ukuran total elemen. Misalnya, jika lebar elemen diatur menjadi 100px dengan padding 10px di setiap sisi, maka lebar total elemen tersebut akan menjadi 120px (100px + 10px + 10px).
+
+## Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flexbox adalah metode tata letak satu dimensi yang digunakan untuk mengatur elemen dalam baris atau kolom. Flexbox menyediakan cara yang lebih efektif untuk mendistribusikan ruang dan menyelaraskan konten dalam sebuah container, bahkan ketika ukurannya bersifat dinamis atau belum diketahui. Flexbox sangat berguna saat kita ingin mengatur tata letak dalam satu arah (baik horizontal maupun vertikal). Contohnya, jika Anda ingin menempatkan beberapa elemen di tengah halaman, flexbox adalah pilihan yang tepat. Selain itu, flexbox memberikan fleksibilitas lebih dalam menyelaraskan setiap item secara individual.flexbox berguna Mengatur elemen secara dinamis dalam satu baris atau kolom, memungkinkan elemen untuk menyesuaikan ukuran dengan memperbesar atau memperkecil sesuai ruang yang tersedia.
+
+Grid layout adalah sistem tata letak dua dimensi yang memudahkan pengembang dalam menciptakan desain halaman yang lebih kompleks dan konsisten menggunakan baris dan kolom. Grid layout memungkinkan pengaturan konten secara simultan dalam baris dan kolom, memberikan fleksibilitas untuk membagi halaman menjadi area yang terdefinisi dengan jelas. Pengembang dapat dengan mudah membuat struktur grid dengan baris dan kolom yang berbeda serta menyesuaikan ukuran setiap sel, yang memberikan kontrol lebih besar atas keseluruhan layout. Grid layout sangat ideal untuk menciptakan tampilan yang rapi dengan kolom yang tetap lebar dan tata letak yang terstruktur secara tepat. grid layout dapat digunakan untuk Menyusun tata letak dua dimensi dengan baris dan kolom, sangat ideal untuk desain yang terstruktur serta membutuhkan fleksibilitas dalam penyesuaian lebar baris dan kolom.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+1. konfigurasikan static files django, tambahkan baris kode ini pada settings.py
+```py
+# Static files (CSS, JavaScript, Images)
+# Dokumentasi: https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'# Static files (CSS, JavaScript, Images)
+```
+STATIC_URL adalah URL yang dapat diakses oleh publik, yang digunakan untuk mengakses dan mendapatkan file statis, seperti gambar, CSS, dan JavaScript, dari aplikasi. URL ini memungkinkan pengguna untuk mengambil file statis yang diperlukan untuk menampilkan konten halaman web dengan benar.
+
+STATIC_ROOT adalah path absolut yang menunjuk ke direktori tempat file statis akan dikumpulkan ketika perintah collectstatic dijalankan dalam proyek. Direktori ini digunakan untuk menyimpan semua file statis agar dapat diakses ketika aplikasi berada dalam mode produksi (dengan pengaturan DEBUG=False di settings.py), sehingga konten statis dapat diakses oleh pengguna.
+
+2. Install Framwork TilWind
+Dengan menggunakan framework tailwind, memudahkan kita untuk melakukan styliing pada website kita. Pemasangan tailwind dapat menggunakan Play CDN (seperti pada tutorial) atau menggunakan TailWind via npm.
+
+3. Buat tempplate template yang diperlukan seperti product_card.html
+```html
+<div class="bg-gray-300 rounded-lg p-6 max-w-xs m-4">
+    <h2 class="text-gray-700 font-bold text-xl mb-2">{{ product_entry.name }}</h2>
+    <p class="text-gray-700 mb-4">{{ product_entry.description }}</p>
+    <p class="text-gray-600 font-semibold">Price: Rp {{ product_entry.price }}</p>
+    <p class="text-gray-600">Quantity: {{ product_entry.quantity }}</p>
+    
+    <div class="mt-4 flex justify-start">
+      <!-- Edit button -->
+      <a href="{% url 'main:edit_product' product_entry.pk %}" class="bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transform hover:scale-105 transition duration-300 ease-in-out py-2 px-4 rounded">
+        Edit
+      </a> 
+      
+      <!-- Delete button with margin left -->
+      <a href="{% url 'main:delete_product' product_entry.pk %}" class="text-white bg-red-500 hover:bg-red-600 hover:scale-105 transition duration-300 ease-in-out py-2 px-4 ml-10 rounded">
+        Delete
+      </a>
+    </div>
+    
+  </div>
+```
+Product card digunakan untuk menampilkan produk kita dalam bentuk card-card, karena kita men include product_card.html kita dalam main, maka data yang dikirim dari view ke main akan dikirim ke product_card
+Selain itu kita buat navbar.html yang berguna untuk menampilkan navigation bar
+```html
+<nav class="">
+    <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Welcome text on the left -->
+        <div class="flex items-center">
+          {% if user.is_authenticated %}
+            <div class="flex flex-col">
+                <span class="text-gray-300 text-2xl font-mono">Welcome, {{ user.username }}</span>
+                <span class="text-gray-300 text-sm font-mono">Sesi terakhir login: {{ last_login }}</span>
+            </div>
+          {% endif %}
+        </div>
+        
+        <!-- Login/Logout buttons on the right -->
+        <div class="hidden md:flex items-center group">
+            <a href="/" class="text-center font-sans bg-violet-700 hover:bg-violet-800 text-white font-bold py-2 
+              px-9 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out mr-4">
+              Home
+            </a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'main:logout' %}" class="text-center font-sans bg-red-500 hover:bg-red-600 text-white font-bold py-2 
+            px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+              Sign Out
+            </a>
+          {% else %}
+            <a href="{% url 'main:login' %}" class="text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 mr-2">
+              Login
+            </a>
+            <a href="{% url 'main:register' %}" class="text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+              Register
+            </a>
+          {% endif %}
+          
+        </div>
+  
+        <!-- Mobile menu button on the right -->
+        <div class="md:hidden flex items-center">
+          <button class="mobile-menu-button">
+            <svg class="w-6 h-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile menu -->
+    <div class="mobile-menu hidden md:hidden px-4 w-full md:max-w-full">
+      <div class="flex flex-col pt-2 pb-3 space-y-1 mx-auto">
+        <div class="text-center font-sans bg-violet-700 hover:via-violet-800 text-white font-bold py-2 px-6
+           rounded shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            <a href="/" class="text-center text-white font-bold py-2 px-6 rounded-lg font-sans">
+              Home
+            </a>
+          </div>
+        {% if user.is_authenticated %}
+          <a href="{% url 'main:logout' %}" class="text-center font-sans bg-red-500 hover:bg-red-600 text-white font-bold py-2 
+          px-6 rounded shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+            Sign Out
+          </a>
+        {% else %}
+          <a href="{% url 'main:login' %}" class="block text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 mb-2">
+            Login
+          </a>
+          <a href="{% url 'main:register' %}" class="block text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            Register
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    
+    <script>
+      const btn = document.querySelector("button.mobile-menu-button");
+      const menu = document.querySelector(".mobile-menu");
+  
+      btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    </script>
+</nav>
+```
+tambahkan edit_product.html yang bisa kita gunakan untuk mengedit atau merubah objek objek objek yan gusdah ditambahkan sebelumnya
+```html
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="bg-gradient-to-b from-black via-[#121212] to-[#292929] min-h-screen">
+      <!-- Navbar -->
+    <div class="p-6">
+        {% include 'navbar.html' %}
+    </div>
+
+    <h1 class="flex justify-center text-4xl font-sans mb-6 mt-12 text-white">Edit Product Entry</h1>
+
+    <div class=" flex justify-center mt-4 items-center">
+        <div class="bg-gray-300 shadow-lg rounded-lg p-8 max-w-4xl w-full">
+            <!-- Form Section -->
+            <form method="POST" class="grid grid-cols-2 gap-6 w-full">
+                {% csrf_token %}
+                
+                <!-- Left Column for product name, price, quantity, and submit button -->
+                <div class="space-y-6">
+                <!-- Product name Input -->
+                <div>
+                    <label for="name" class="font-sans">Nama Produk</label>
+                    <input type="text" name="name" id="name" placeholder="Masukkan nama produk"
+                    value= "{{ product.name }}" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none font-sans text-gray-900" 
+                    required>
+                </div>
+
+                <!-- Product price Input -->
+                <div>
+                    <label for="price" class="font-sans">Harga Produk</label>
+                    <input type="number" name="price" id="price" placeholder="Masukkan harga produk" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none font-sans text-gray-900 appearance-none"
+                    value="{{ product.price }}"
+                    min="1" oninput="this.value = Math.abs(this.value)" required>
+                </div>
+
+                <!-- Product quantity Input -->
+                <div>
+                    <label for="quantity" class="font-sans">Jumlah Produk</label>
+                    <input type="number" name="quantity" id="quantity" placeholder="Masukkan jumlah produk" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none font-sans text-gray-900 appearance-none"
+                    value="{{ product.quantity }}"
+                    min="1" oninput="this.value = Math.abs(this.value)" required>
+                </div>
+
+                <!-- Submit button -->
+                <div class="mt-6">
+                    <input type="submit" value="Edit Product Entry"
+                    class="w-full font-sans bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transform hover:scale-105 transition duration-300 ease-in-out py-2 px-4 rounded">
+                </div>
+                </div>
+
+                <!-- Right Column for product description -->
+                <div class="flex flex-col justify-start">
+                <!-- Product description Input -->
+                <label for="description" class="font-sans">Deskripsi Produk</label>
+                <textarea name="description" id="description" placeholder="Deskripsikan produk anda" 
+                    class="w-full h-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none font-sans text-gray-900"
+                    required>{{ product.description }}</textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+```
+pastikan anda telah membuat routing untuk edit produk di urls.py
+```py
+    from main.views import edit_product
+    ...
+    path('edit/<uuid:id>', edit_product, name='edit_product'),
+    ...
+```
+
+dan jangan lupa konfigurasikan views, dan kirim data berupa pk dari object yang kita select
+```py
+def edit_product(request, id):
+    # Get mood entry berdasarkan id
+    product = Product.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ProductEntryForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form,
+               'product': product,
+               'last_login': request.COOKIES['last_login'],}
+    return render(request, "edit_product.html", context)
+```
+
+selanjutnya kita dapat menyesuaikan setiap komponen dalam dbms jika memang kita ingin mendesain website kita sedemikian rupa, seperti contoh saya merubah beberapa fungsi di dalam vies sehingga saya dapat memastikan data data yang saya butuhkan di passed ke dalam template yang dirender.
