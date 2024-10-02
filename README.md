@@ -753,3 +753,5 @@ def edit_product(request, id):
 ```
 
 selanjutnya kita dapat menyesuaikan setiap komponen dalam dbms jika memang kita ingin mendesain website kita sedemikian rupa, seperti contoh saya merubah beberapa fungsi di dalam vies sehingga saya dapat memastikan data data yang saya butuhkan di passed ke dalam template yang dirender.
+
+temp val untuk push pws
