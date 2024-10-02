@@ -397,7 +397,7 @@ def show_main():
 5. Buat akun pengguna dengan cara melakukan registrasi pada laman yang telah tersedia yaitu localhost:8000 lalu anda akan pasti diarahkan ke login page, namun anda dapat mengklik button register dan silahkan registrasi (2 user), didalamnya anda dapat langsung membuat keterangan mengenai produk, hal ini akan otomatis tersimpan berdasarkan user.
 
 ---
-## Tugas 4 - PBP 24/25
+## Tugas 5 - PBP 24/25
 
 ## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
 prioritas css selector sebagai berikut:
