@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block meta %}
+<title>Barito International</title>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+{% endblock meta %}
 {% block content %}
   <div class="bg-gradient-to-b from-black via-[#121212] to-[#292929] min-h-screen font-sans text-gray-200">
 
@@ -92,6 +96,8 @@
 
       // Jika tidak ada produk, tampilkan gambar "sedih-banget"
       if (productEntries.length === 0) {
+        const name = DOMPurify.sanitize(item.fields.name);
+        const description = DOMPurify.sanitize(item.fields.description);
         htmlString = `
           <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
             <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-72 h-72"/>

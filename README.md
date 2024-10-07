@@ -755,3 +755,46 @@ def edit_product(request, id):
 selanjutnya kita dapat menyesuaikan setiap komponen dalam dbms jika memang kita ingin mendesain website kita sedemikian rupa, seperti contoh saya merubah beberapa fungsi di dalam vies sehingga saya dapat memastikan data data yang saya butuhkan di passed ke dalam template yang dirender.
 
 temp val untuk push pws attemt-6
+
+---
+## Tugas 6 - PBP 24/25
+
+## Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+JavaScript berperan penting dalam membuat halaman web menjadi dinamis, interaktif, serta meningkatkan pengalaman pengguna. Dengan JavaScript, pengembang dapat menambahkan fitur-fitur interaktif yang tidak bisa diwujudkan hanya dengan HTML dan CSS, seperti form validasi dan dropdown. JavaScript memiliki ekosistem pengembangan web yang unggul, didukung oleh komunitas besar serta beragam library dan framework seperti React, Angular, dan Vue.js untuk pengembangan front-end, serta Node.js untuk back-end. JavaScript telah menjadi standar yang diakui oleh semua browser modern, dan fleksibilitasnya memungkinkan pengembangan web yang responsif dan lintas platform.
+
+Keunggulan JavaScript dalam pengembangan aplikasi web meliputi kemampuannya untuk membuat elemen interaktif, memanipulasi elemen di halaman web secara dinamis (DOM), serta memungkinkan komunikasi asinkron dengan server menggunakan XMLHttpRequest atau fetch(), yang membuat aplikasi lebih responsif tanpa perlu memuat ulang halaman. JavaScript juga mendukung pengembangan aplikasi lintas platform karena dapat berjalan di hampir semua browser modern. Dengan framework atau library seperti React, Angular, dan Vue, JavaScript memungkinkan pembuatan aplikasi web yang efisien dengan konsep Single Page Application (SPA), di mana hanya sebagian halaman yang diperbarui untuk menjaga performa.
+
+## Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+fetch() adalah fungsi bawaan JavaScript yang digunakan untuk mengambil data dari URL dan mengembalikannya dalam bentuk Promise, yang bisa berhasil (resolve) atau gagal (reject). Keyword await memungkinkan JavaScript untuk menunggu hingga Promise selesai (resolved) sebelum melanjutkan ke kode berikutnya, namun hanya bisa digunakan dalam fungsi yang bersifat asynchronous (dideklarasikan dengan kata kunci async). Saat kita menggunakan await bersama fetch(), kita menunda eksekusi fungsi asynchronous hingga respons dari server diterima, membuat kode lebih mudah dibaca karena terlihat seperti operasi synchronous. Tanpa menggunakan await, kode berikutnya akan dieksekusi segera setelah fetch() dipanggil, tanpa menunggu data sepenuhnya diambil, yang dapat menyebabkan masalah jika data belum tersedia ketika diperlukan. Selain await, kita juga dapat menggunakan then() untuk menangani Promise dari fetch(), tetapi penggunaan then() dapat membuat kode sulit dibaca, terutama jika ada banyak operasi asynchronous yang saling bergantung.
+
+```py
+  const response = fetch('url'); // Mengembalikan Promise
+  const data = response.json();   // Ini akan dieksekusi sebelum response selesai
+```
+
+```py
+  const response = await fetch('url');
+  const data = await response.json(); // Menunggu response selesai
+```
+
+## Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Decorator csrf_exempt memungkinkan Django untuk mengabaikan pengecekan csrf_token pada POST request yang dikirimkan ke fungsi tersebut.
+
+Decorator @csrf_exempt digunakan untuk mengecualikan view dari perlindungan Cross-Site Request Forgery (CSRF) di Django. Mekanisme CSRF biasanya digunakan untuk mencegah serangan di mana pengguna secara tidak sengaja mengirim permintaan yang berbahaya. Namun, dalam beberapa situasi seperti saat menggunakan AJAX untuk POST request, token CSRF tidak selalu terkirim secara otomatis, sehingga bisa muncul error jika POST dilakukan tanpa token CSRF yang valid. Dengan menambahkan @csrf_exempt pada view, Django akan mengabaikan pemeriksaan token CSRF pada request tersebut.
+
+Namun, menonaktifkan CSRF harus dilakukan dengan hati-hati dan hanya jika benar-benar diperlukan karena dapat menimbulkan risiko keamanan. Alternatif yang lebih aman adalah menyertakan token CSRF dalam header AJAX request.
+
+
+Token CSRF tidak otomatis dikirim bersama POST request yang dilakukan melalui AJAX karena mekanisme pengiriman token CSRF pada permintaan HTTP berbeda dengan cara AJAX beroperasi. Secara default, Django mengharapkan token CSRF untuk dikirim bersama form submission dalam request POST melalui cookie atau sebagai bagian dari form data. Namun, dalam AJAX request, permintaan dilakukan secara programatis menggunakan JavaScript, dan tidak selalu mengikuti alur pengiriman form standar.
+
+Ada beberapa alasan mengapa token CSRF tidak dikirim otomatis dalam AJAX request:
+
+- Header Tidak Disertakan Secara Default: AJAX request tidak secara otomatis mengirimkan token CSRF di header atau body request. Untuk melakukannya, token CSRF perlu secara eksplisit disertakan oleh JavaScript dalam header atau payload POST request.
+
+- Perbedaan dengan Form HTML Biasa: Saat menggunakan form HTML biasa, Django secara otomatis menambahkan token CSRF ke form melalui tag tersembunyi (<input type="hidden" name="csrfmiddlewaretoken">). Namun, dalam AJAX, karena pengiriman dilakukan melalui JavaScript dan bukan form HTML, token ini tidak disertakan kecuali diproses secara manual.
+
+- Cross-Domain Request: Jika AJAX request dilakukan ke domain yang berbeda, browser tidak akan menyertakan cookie CSRF secara otomatis untuk alasan keamanan, sehingga token harus disertakan dengan metode lain.
+
+##  Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Jika pembersihan hanya dilakukan di frontend, penyerang masih bisa menyuntikkan kode berbahaya ke dalam input dan mengirimkannya ke backend. Backend yang tidak melakukan validasi ulang dapat mengeksekusi kode tersebut, memungkinkan penyerang untuk mencuri data pengguna, merusak situs web, termasuk melakukan SQL Injection. Serangan SQL Injection memungkinkan penyerang menyuntikkan kode SQL ke dalam input pengguna untuk memanipulasi basis data. Jika pembersihan hanya dilakukan di frontend, penyerang dapat melewati validasi dan mengeksekusi perintah SQL berbahaya di backend.
+
