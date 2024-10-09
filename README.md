@@ -798,3 +798,218 @@ Ada beberapa alasan mengapa token CSRF tidak dikirim otomatis dalam AJAX request
 ##  Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
 Jika pembersihan hanya dilakukan di frontend, penyerang masih bisa menyuntikkan kode berbahaya ke dalam input dan mengirimkannya ke backend. Backend yang tidak melakukan validasi ulang dapat mengeksekusi kode tersebut, memungkinkan penyerang untuk mencuri data pengguna, merusak situs web, termasuk melakukan SQL Injection. Serangan SQL Injection memungkinkan penyerang menyuntikkan kode SQL ke dalam input pengguna untuk memanipulasi basis data. Jika pembersihan hanya dilakukan di frontend, penyerang dapat melewati validasi dan mengeksekusi perintah SQL berbahaya di backend.
 
+## Step By Step Minggu ini
+Pada dasrnya kita akan membuat Adjax GET dan AJAX POST
+
+Lakukan Perubahan pada fungsi yang ada di views.py yaitu ganti filtering product menjadi seperti berikut
+```py
+  data = Product.objects.filter(user=request.user)
+```
+mengapa? karena data dari show_json nantinya lah yang akan kita GET 
+
+buatlah ajax getProductEntries di dalam berkas main.html
+
+```html
+  async function getProductEntries(){
+        return fetch("{% url 'main:show_json' %}").then((res) => res.json());
+    }
+```
+
+pastikan kita mengset async, dikarenakan kita ingin get produknya asinkronuss, nah dari sinilah show_json akan di get berdasarkan user dan akan dilakukan parse pada data JSON menjadi objek js
+
+setelah selesai semua, rubah template main yang tadinya menggunakan product card, dan card ambil data secara langsung, kini sesuaikan di main.html dan pengambilan data secara asinkronus tadi menggunakan js.
+
+```html
+// Jika tidak ada produk, tampilkan gambar "sedih-banget"
+      if (productEntries.length === 0) {
+        const name = DOMPurify.sanitize(item.fields.name);
+        const description = DOMPurify.sanitize(item.fields.description);
+        htmlString = `
+          <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+            <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-72 h-72"/>
+            <p class="text-center text-gray-600 mt-4">Belum ada data produk pada sistem.</p>
+          </div>
+        `;
+      } else {
+        // Tampilkan data produk dalam bentuk card
+        productEntries.forEach((item) => {
+          htmlString += `
+            <div class="bg-gray-300 rounded-lg p-3 min-w-[250px] max-w-md m-4">
+              <h2 class="text-gray-700 font-bold text-xl mb-2">${item.fields.name}</h2>
+              <p class="text-gray-700 mb-4">${item.fields.description}</p>
+              <p class="text-gray-600 font-semibold">Price: Rp ${item.fields.price}</p>
+              <p class="text-gray-600">Quantity: ${item.fields.quantity}</p>
+
+              <!-- Tombol Edit dan Hapus -->
+              <div class="flex justify-end space-x-2 mt-4">
+                <a href="/edit/${item.pk}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                  </svg>
+                </a>
+                <a href="/delete/${item.pk}" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      // Masukkan HTML produk ke dalam kontainer
+      productContainer.innerHTML = htmlString;
+    }
+```
+sampai disini kita sudah mengimplementasikan GET menggunakan ajax
+
+Sekarang kita akan mengimplementasikan method POST dengan menggunakan ajax
+pertama kita setup function yang ada di views.py
+```py
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    name = strip_tags(request.POST.get("name"))
+    price = request.POST.get("price")
+    description = strip_tags(request.POST.get("description"))
+    quantity = request.POST.get("quantity")
+    user = request.user
+    
+    new_product = Product(
+        name=name, price=price,
+        description=description, quantity=quantity,
+        user=user
+    )
+    new_product.save()
+
+    return HttpResponse(b"CREATED", status=201)
+```
+function ini nanti akan di call, oleh karena itu kita membutuhkan routing
+kedua kita buat routingn yang digunakan sebagai tombol 
+tambahkan saja 
+```py
+path('create-product-entry-ajax', add-product_entry_ajax, name='add-product_entry_ajax'),
+```
+di dalam urlpatterns yang ada di urls.py
+
+setelah 2 hal tersebut disetup, sekarang kita siapkan modal sebagai form untuk menambahkan product
+```html
+<div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+  <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+    <!-- Modal header -->
+    <div class="flex items-center justify-between p-4 border-b rounded-t">
+      <h3 class="text-xl font-semibold text-gray-900">
+        Add New Mood Entry
+      </h3>
+      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="px-6 py-4 space-y-6 form-style">
+      <form id="productEntryForm">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Product Name</label>
+          <input type="text" id="name" name="name" class="mt-1 block w-full border text-black border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Enter your product name" required>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">Product Description</label>
+          <textarea id="description" name="description" rows="3" class="mt-1 block w-full h-52 resize-none border text-black border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Describe your product(s)" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" min="1" class="mt-1 block w-full border text-black border-gray-300 rounded-md p-2 hover:border-indigo-700" required placeholder="Enter the product's price">
+        </div>
+        <div class="mb-4">
+          <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+          <input type="number" id="quantity" name="quantity" min="1" class="mt-1 block w-full border text-black border-gray-300 rounded-md p-2 hover:border-indigo-700" required placeholder="Enter the quantity">
+        </div>
+      </form>
+    </div>
+    <!-- Modal footer -->
+    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+      <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+      <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+    </div>
+  </div>
+</div>
+```
+
+lalu dengan bantuan html dom, kita buat agar modal yang sudah kita buat bisa berfungsi (show / hided)
+```js
+// Tambahkan event listener untuk tombol "Add New Product Entry"
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    function showModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modal.classList.remove('hidden'); 
+        setTimeout(() => {
+          modalContent.classList.remove('opacity-0', 'scale-95');
+          modalContent.classList.add('opacity-100', 'scale-100');
+        }, 50); 
+    }
+
+    function hideModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 150); 
+    }
+
+    document.getElementById("cancelButton").addEventListener("click", hideModal);
+    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+```
+
+Sekarang tinggal kita tambahkan button ajah (ni ga selese selesai dah)
+```html
+<!-- Add New Product Button -->
+    <div class="flex justify-end px-6 mt-8 gap-x-4">
+      <a href="{% url 'main:create_product_entry' %}">
+        <button class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+          Add New Product Entry
+        </button>
+      </a>
+      <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
+        Add New Product Entry by AJAX
+      </button>
+    </div>
+```
+
+namun modal yang kita buat tadi masih belum bisa mengirimkan data, kita butuh bantuan js untuk ini dengna cara
+```js
+function addProductEntry() {
+    fetch("{% url 'main:add_product_entry_ajax' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector('#productEntryForm')),
+    })
+    .then(response => refreshProductEntries())
+
+    document.getElementById("productEntryForm").reset(); 
+    document.querySelector("[data-modal-toggle='crudModal']").click();
+
+    return false;
+    }
+```
+
+setelah itu bikin event listener agar jika submit ada event dia akan call 2 fungsi salah satunya addMoodEntry()
+```js
+document.getElementById("productEntryForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProductEntry();
+    })
+```
+
+DONE -__-, dah yak PBP, jangan ngereog bismillah UTS 100/100 ameeeeeen
