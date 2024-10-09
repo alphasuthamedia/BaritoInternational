@@ -36,11 +36,17 @@ def create_product_entry(request):
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
-
+    cookie = request.COOKIES.get('last_login')
+    
+    if cookie:
+        last_login = datetime.datetime.strptime(cookie, "%Y-%m-%d %H:%M:%S.%f")
+    else:
+        return redirect('main:login')
+    
     context = {
         'name' : request.user.username,
         'tagline' : tagline,
-        'last_login' : request.COOKIES['last_login'],
+        'last_login' : last_login,
     }
 
     return render(request, "main.html", context)
