@@ -1012,4 +1012,4 @@ document.getElementById("productEntryForm").addEventListener("submit", (e) => {
     })
 ```
 
-DONE -__-, dah yak PBP, jangan ngereog bismillah UTS 100/100 ameeeeeen
+DONE -__-, dah yak PBP, jangan ngereog bismillah UTS 100/100 ameeeeeena
